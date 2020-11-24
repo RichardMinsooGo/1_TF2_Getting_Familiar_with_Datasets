@@ -31,13 +31,17 @@ LABELS_LIST = [
     '9'
 ]
 
-fig = pyplot.figure()
-for i in range(60):
-    subplot = fig.add_subplot(4, 15, i + 1)
-    subplot.set_xticks([])
-    subplot.set_yticks([])
-    subplot.set_title('%d' % LABELS_LIST[trainy[i]])
-    subplot.imshow(trainX[i], cmap=pyplot.cm.gray_r)
-
+num_row = 4
+num_col = 12
+num = num_row*num_col
+images = trainX[:num]
+labels = trainy[:num]
+# plot images
+fig, axes = pyplot.subplots(num_row, num_col, figsize=(1.5*num_col,2*num_row))
+for i in range(num):
+    ax = axes[i//num_col, i%num_col]
+    ax.imshow(images[i], cmap='gray')
+    ax.set_title('{}'.format(LABELS_LIST[trainy[i]]))
+pyplot.tight_layout()
 pyplot.show()
 

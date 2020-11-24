@@ -11,21 +11,29 @@ print('Train: X=%s, y=%s' % (trainX.shape, trainy.shape))
 print('Test: X=%s, y=%s' % (testX.shape, testy.shape))
 # plot first few images
 for i in range(9):
-	# define subplot
-	pyplot.subplot(330 + 1 + i)
-	# plot raw pixel data
-	pyplot.imshow(trainX[i], cmap=pyplot.get_cmap('gray'))
+    # define subplot
+    pyplot.subplot(330 + 1 + i)
+    # plot raw pixel data
+    pyplot.imshow(trainX[i], cmap=pyplot.get_cmap('gray'))
+    # if you want to invert color, you can use 'gray_r'. this can be used only for MNIST, Fashion MNIST not cifar10
+    # pyplot.imshow(trainX[i], cmap=pyplot.get_cmap('gray_r'))
+    
 # show the figure
 pyplot.show()
 
-
-fig = pyplot.figure()
-for i in range(60):
-    subplot = fig.add_subplot(4, 15, i + 1)
-    subplot.set_xticks([])
-    subplot.set_yticks([])
-    subplot.set_title('%d' % trainy[i])
-    subplot.imshow(trainX[i], cmap=pyplot.cm.gray_r)
-
+num_row = 4
+num_col = 12
+num = num_row*num_col
+images = trainX[:num]
+labels = trainy[:num]
+# plot images
+fig, axes = pyplot.subplots(num_row, num_col, figsize=(1.5*num_col,2*num_row))
+for i in range(num):
+    ax = axes[i//num_col, i%num_col]
+    ax.imshow(images[i], cmap='gray')
+    # if you want to invert color, you can use 'gray_r'. this can be used only for MNIST, Fashion MNIST not cifar10
+    # ax.imshow(images[i], cmap='gray_r')
+    ax.set_title('{}'.format(trainy[i]))
+pyplot.tight_layout()
 pyplot.show()
 
